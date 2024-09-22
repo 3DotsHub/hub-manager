@@ -32,14 +32,24 @@ const config: HardhatUserConfig = {
 		enabled: true,
 		currency: 'USD',
 	},
-	abiExporter: {
-		path: './abi',
-		clear: true,
-		runOnCompile: true,
-		flat: true,
-		spacing: 4,
-		pretty: false,
-	},
+	abiExporter: [
+		{
+			path: './abi',
+			clear: true,
+			runOnCompile: true,
+			flat: true,
+			spacing: 4,
+			pretty: false,
+		},
+		{
+			path: './abi/signature',
+			clear: true,
+			runOnCompile: true,
+			flat: true,
+			spacing: 4,
+			pretty: true,
+		},
+	],
 	mocha: {
 		timeout: 120000,
 	},

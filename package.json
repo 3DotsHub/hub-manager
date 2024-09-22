@@ -1,6 +1,6 @@
 {
 	"name": "@3dotshub/hub-manager",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"private": false,
 	"license": "MIT",
 	"description": "Backend service and manager via evm blockchain",
@@ -11,7 +11,8 @@
 	"scripts": {
 		"compile": "npx hardhat compile",
 		"test": "npx hardhat test",
-		"coverage": "npx hardhat coverage"
+		"coverage": "npx hardhat coverage",
+		"publish": "npm publish --access public"
 	},
 	"repository": {
 		"type": "git",

@@ -2,4 +2,4 @@
 export * from './address.config';
 
 // export abis
-export { default as Membership } from './abi/Membership.json';
+export * from './exports/Membership';
