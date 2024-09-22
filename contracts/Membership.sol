@@ -15,6 +15,10 @@ contract Membership is AccessControl {
 		_setRoleAdmin(MEMBER_ROLE, EXECUTOR_ROLE);
 
 		_grantRole(ADMIN_ROLE, admin);
+
+		_grantRole(EXECUTOR_ROLE, admin);
 		_grantRole(EXECUTOR_ROLE, msg.sender);
+		
+		_grantRole(MEMBER_ROLE, msg.sender);
 	}
 }

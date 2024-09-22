@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+import '@openzeppelin/contracts/access/AccessControl.sol';
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 import './Membership.sol';
-import 'hardhat/console.sol';
 
 struct MemberInfo {
 	uint256 id;
@@ -11,19 +11,21 @@ struct MemberInfo {
 	string depositBtc;
 }
 
-contract ReplicatedStrategyController {
-	Membership public immutable member;
+contract ReplicatedStrategyController is AccessControl {
+	bytes32 public constant ADMIN_ROLE = keccak256('ADMIN_ROLE');
+	bytes32 public constant EXECUTOR_ROLE = keccak256('EXECUTOR_ROLE');
+	bytes32 public constant MEMBER_ROLE = keccak256('MEMBER_ROLE');
 
-	mapping(address member => MemberInfo infoDetails) public info;
-	mapping(address token => bool isDepositable) public isDepositToken;
+	mapping(address member => MemberInfo) public info;
+	mapping(address token => bool) public isDepositToken;
 
 	// ---------------------------------------------------------------------------------------
 	modifier onlyExecutors() {
-		require(member.hasRole(member.EXECUTOR_ROLE(), msg.sender) == true, 'No Executor');
+		require(hasRole(EXECUTOR_ROLE, msg.sender) == true, 'No Executor');
 		_;
 	}
 	modifier onlyMembers() {
-		require(member.hasRole(member.MEMBER_ROLE(), msg.sender) == true, 'No Member');
+		require(hasRole(MEMBER_ROLE, msg.sender) == true, 'No Member');
 		_;
 	}
 
@@ -37,8 +39,14 @@ contract ReplicatedStrategyController {
 	error NotDepositToken();
 
 	// ---------------------------------------------------------------------------------------
-	constructor(address _member, address _usdc, address _usdt) {
-		member = Membership(_member);
+	constructor(address admin, address _usdc, address _usdt) {
+		_setRoleAdmin(ADMIN_ROLE, ADMIN_ROLE);
+		_setRoleAdmin(EXECUTOR_ROLE, ADMIN_ROLE);
+		_setRoleAdmin(MEMBER_ROLE, EXECUTOR_ROLE);
+
+		_grantRole(ADMIN_ROLE, admin);
+		_grantRole(EXECUTOR_ROLE, msg.sender);
+
 		_setDepositToken(_usdc, true);
 		_setDepositToken(_usdt, true);
 	}
@@ -60,7 +68,7 @@ contract ReplicatedStrategyController {
 		info[_newMember].id = _id;
 		info[_newMember].depositEth = _depositEth;
 		info[_newMember].depositBtc = _depositBtc;
-		member.grantRole(member.MEMBER_ROLE(), _newMember);
+		grantRole(MEMBER_ROLE, _newMember);
 		emit MemberRegistered(_newMember, msg.sender);
 	}
 
