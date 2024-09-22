@@ -1,8 +1,9 @@
 {
-	"name": "vaultmanager",
-	"version": "1.0.0",
-	"description": "Manage a replicated strategy with the blockchain",
+	"name": "@3dotshub/hub-manager",
+	"version": "0.0.1",
+	"private": false,
 	"license": "MIT",
+	"description": "Backend service and manager via evm blockchain",
 	"directories": {
 		"doc": "docs",
 		"test": "tests"
@@ -14,14 +15,14 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/"
+		"url": "git+https://github.com/3DotsHub/hub-manager"
 	},
 	"keywords": [],
 	"author": "@3dotshub, @samclassix",
 	"bugs": {
-		"url": "https://github.com/.../issues"
+		"url": "https://github.com/3DotsHub/hub-manager/issues"
 	},
-	"homepage": "https://github.com/...#readme",
+	"homepage": "https://github.com/3DotsHub/hub-manager#readme",
 	"devDependencies": {
 		"@nomicfoundation/hardhat-chai-matchers": "^2.0.2",
 		"@nomicfoundation/hardhat-ethers": "^3.0.4",
@@ -39,6 +40,7 @@
 		"hardhat-gas-reporter": "^1.0.9",
 		"mocha": "^10.7.0",
 		"solidity-coverage": "^0.8.4",
+		"viem": "^2.17.8",
 		"tsc-watch": "^6.2.0"
 	},
 	"dependencies": {
